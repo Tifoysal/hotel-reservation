@@ -1,0 +1,30 @@
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+deploy:
+  type: deploy
+
+  environment:
+    name: prod
+    url: bmgroupbd.com
+
+  script:
+    - ssh sumon@159.89.205.155 "
+      cd /var/www/html/bmgroupbd.com &&
+      git checkout master &&
+      git pull origin master &&
+      composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev &&
+      php artisan migrate --force &&
+      php artisan cache:clear &&
+      exit"
+
+  only:
+    - master
