@@ -1,4 +1,4 @@
-# BM Group Bangladesh Online Booking System
+# Hotel Reservation System
 
 [![Build Status](https://gitlab.com/kodeeo/bmgroup/badges/master/pipeline.svg)](https://gitlab.com/kodeeo/bmgroup/pipelines)
 [![Test Coverage](https://gitlab.com/kodeeo/bmgroup/badges/master/coverage.svg)](https://gitlab.com/kodeeo/bmgroup/tree/master/tests)
